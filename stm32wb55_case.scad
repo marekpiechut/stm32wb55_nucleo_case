@@ -85,5 +85,5 @@ module the_cover() {
 }
 
 the_case();
-//the_cover();
+the_cover();
 //translate([0, -80, 0]) the_case();
