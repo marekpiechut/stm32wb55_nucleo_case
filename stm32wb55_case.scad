@@ -4,11 +4,12 @@ $fa = 1;
 $fs = 0.4;
 
 height =  15;
+cover_distance = 6;
 
-pcb = [[0, 2], [11, 2], [13, 0], [45, 0], [47, 2], [70.5, 2], [70.5, 57], [31, 57], [29, 59.5], [29, 64.4], [0, 64.4], [0, 0]];
+pcb = [[0, 2], [11, 2], [13, 0], [46, 0], [48, 2], [70.7, 2], [70.7, 57.2], [31, 57.2], [29, 59.7], [29, 64.6], [0, 64.6], [0, 0]];
 
 module usb_holes() {
-	roundedCube([24.5, 20, 5], 1, false, true, false);
+	roundedCube([25, 20, 9], 1, false, true, false);
 }
 
 module exterior() {
@@ -23,7 +24,7 @@ module interior() {
 	translate([0, 0, 2]) linear_extrude(height) {
 		polygon(pcb);
 	}
-	translate([34.5, -8, 6]) usb_holes();
+	translate([34.5, -8, 4.5]) usb_holes();
 }
 
 module battery_hole() {
@@ -51,38 +52,38 @@ module the_case() {
 			battery_hole();
 			translate([14, 28, 0]) logo();
 		}
-		translate([0, 10, 0]) cube([0.6, 1, height]);
-		translate([0, 54.4 , 0]) cube([0.5, 1, height]);
-		translate([69.9, 10, 0]) cube([0.6, 1, height]);
-		translate([69.9, 49 , 0]) cube([0.5, 1, height]);
+		translate([0, 10, 0]) cube([0.3, 1, height]);
+		translate([0, 54.4 , 0]) cube([0.3, 1, height]);
+		translate([70.4, 10, 0]) cube([0.3, 1, height]);
+		translate([70.4, 49 , 0]) cube([0.3, 1, height]);
 	}
 }
 
 module the_cover() {
 	union() {
 		difference() {
-			linear_extrude(height) {
+			linear_extrude(height + cover_distance) {
+				offset(r=4.4) {
+					polygon(pcb);
+				}
+			}
+			translate([0, 0, -3]) linear_extrude(height + cover_distance + 1) {
 				offset(r=2.4) {
 					polygon(pcb);
 				}
 			}
-			translate([0, 0, -3]) linear_extrude(height + 1) {
-				offset(r=0.4) {
-					polygon(pcb);
-				}
-			}
-			translate([4, 1, -2]) roundedCube([13, 55, 20]);
-			translate([53, 1, -2]) roundedCube([13, 55, 20]);
-			translate([34.5, -8, -1]) roundedCube([24.5, 20, 10], 1, false, true, false);
-			translate([35.25, 28.5, height - 0.4]) radiation();
+			translate([1, 1, -2]) roundedCube([13, 57, 50]);
+			translate([5, 1, -2]) roundedCube([13, 57, 500]);
+			translate([34.5, -8, -1]) roundedCube([25, 20, 14.5], 1, false, true, false);
+			translate([35.25, 28.5, height + cover_distance - 0.4]) radiation();
 		}
-		translate([-0.4, 10, 0]) cube([0.5, 1, height]);
-		translate([-0.4, 54.4 , 0]) cube([0.5, 1, height]);
-		translate([70.4, 10, 0]) cube([0.5, 1, height]);
-		translate([70.4, 49 , 0]) cube([0.5, 1, height]);
+		translate([-2.4, 15, 0]) cube([0.3, 1, height + cover_distance]);
+		translate([-2.4, 49.4 , 0]) cube([0.3, 1, height + cover_distance]);
+		translate([72.8, 15, 0]) cube([0.3, 1, height + cover_distance]);
+		translate([72.8, 44 , 0]) cube([0.3, 1, height + cover_distance]);
 	}
 }
 
-//the_case();
-the_cover();
-translate([0, -80, 0]) the_case();
+the_case();
+//the_cover();
+//translate([0, -80, 0]) the_case();
